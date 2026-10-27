@@ -1,0 +1,145 @@
+* {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+}
+
+.main1 {
+	width: 100%;
+}
+
+.border-box {
+	position: relative;
+	width: min(1900px, calc(100% - 32px));
+	height: 950px;
+	margin: 0 auto;
+}
+
+.top-left {
+	display: flex;
+	position: absolute;
+	top: 50px;
+	left: 4%;
+	margin: 0;
+	font-size: 40px;
+	font-weight: 800;
+	font-family: 'Manrope', sans-serif;
+	font-optical-sizing: auto;
+	font-style: normal;
+}
+
+.salam-text {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: calc(100% - 32px);
+	margin: 0;
+	text-align: center;
+	font-family: 'DotGothic16', sans-serif;
+	font-weight: 400;
+	font-style: normal;
+	font-size: clamp(18px, 3vw, 45px);
+	line-height: 1.5;
+}
+
+.top-right {
+	display: flex;
+	position: absolute;
+	top: 50px;
+	right: 4%;
+	margin: 0;
+	font-size: 18px;
+	font-weight: 600;
+	font-family: 'Manrope', sans-serif;
+	font-optical-sizing: auto;
+	font-style: normal;
+}
+
+.top-right-under {
+	display: flex;
+	position: absolute;
+	top: 70px;
+	right: 4%;
+	margin: 0;
+	font-size: 12px;
+	font-weight: 300;
+	font-family: 'Manrope', sans-serif;
+	font-optical-sizing: auto;
+	font-style: normal;
+}
+
+body {
+	background: white;
+	color: #111;
+}
+
+body.dark {
+	background: #111;
+	color: white;
+}
+
+.theme-toggle {
+	border: 0;
+	background: none;
+	color: inherit;
+	display: flex;
+	position: absolute;
+	bottom: 110px;
+	right: 4%;
+	margin: 0;
+	font-size: 14px;
+	font-weight: 800;
+	font-family: 'Manrope', sans-serif;
+	font-optical-sizing: auto;
+	font-style: normal;
+	transform: rotate(-90deg);
+	cursor: pointer;
+}
+/* Полная шкала насыщенности шрифта:
+100 — Thin (тонкий, волосяной); 
+200 — Extra Light (сверхсветлый); 
+300 — Light (светлый); 
+400 — Normal (обычный); 
+500 — Medium (средний); 
+600 — Semi Bold (полужирный, также Demi Bold); 
+700 — Bold (жирный); 
+800 — Extra Bold (сверхжирный); 
+900 — Black (густой, Heavy).
+*/
+html {
+	scroll-behavior: smooth;
+}
+#navigation {
+	border: 0;
+	color: black;
+	display: flex;
+	position: absolute;
+	bottom: 400px;
+	left: -10%;
+	margin: 0;
+	font-size: 14;
+	font-weight: 300;
+	font-family: 'Manrope', sans-serif;
+	font-optical-sizing: auto;
+	font-style: normal;
+	transform: rotate(-90deg);
+	gap: 52px;
+}
+
+nav a,
+nav a:visited {
+	color: #111;
+	text-decoration: none;
+}
+
+nav a:hover {
+	opacity: 0.7;
+}
+
+body.dark nav a,
+body.dark nav a:visited {
+	color: white;
+}
