@@ -16,6 +16,7 @@
 	--edge: clamp(16px, 5.7vw, 82px);
 }
 
+/* Тёмная тема: просто подменяем переменные */
 body.dark {
 	color-scheme: dark;
 	--page: #111;
@@ -39,15 +40,14 @@ html {
 
 body {
 	margin: 0;
+	overflow-x: hidden; /* страховка: на телефоне не должно быть горизонтальной прокрутки */
 	background: var(--page);
 	color: var(--ink);
 	border-top: 4px solid var(--ink);
 	font-family: var(--font);
 	font-size: 14px;
 	line-height: normal;
-	transition:
-		background-color 240ms ease,
-		color 240ms ease;
+	transition: background-color 240ms ease, color 240ms ease;
 }
 
 a {
@@ -58,7 +58,6 @@ a {
 h1,
 h2,
 h3,
-h4,
 p,
 ul {
 	margin: 0;
@@ -81,7 +80,7 @@ button:focus-visible,
 	outline-offset: 4px;
 }
 
-/* ---------- layout bands ---------- */
+/* ---------- каркас секций ---------- */
 .band {
 	border-bottom: 1px solid var(--line);
 }
@@ -97,10 +96,20 @@ button:focus-visible,
 	padding-right: var(--pad-r);
 }
 
-/* ---------- shared bits ---------- */
+/* ---------- общие элементы ---------- */
 .heading h2 {
 	font-size: 30px;
 	font-weight: 800;
+}
+
+.heading-right {
+	display: grid;
+	justify-items: end;
+}
+
+.heading-center {
+	display: grid;
+	justify-items: center;
 }
 
 .hr-bar {
@@ -117,16 +126,7 @@ button:focus-visible,
 	margin: 0;
 }
 
-.heading-right {
-	display: grid;
-	justify-items: end;
-}
-
-.heading-center {
-	display: grid;
-	justify-items: center;
-}
-
+/* Ссылка/кнопка с короткой чертой снизу */
 .u-link {
 	--uw: 23px;
 	display: inline-block;
@@ -152,7 +152,7 @@ button:focus-visible,
 	opacity: 0.6;
 }
 
-/* ---------- mockup (CSS laptop, replaced by your PNG if you add one) ---------- */
+/* ---------- макет сайта, нарисованный CSS (поверх него ложится ваша картинка) ---------- */
 .shot,
 .p-shot {
 	position: relative;
@@ -291,6 +291,7 @@ button:focus-visible,
 	background: var(--ink);
 }
 
+/* Вертикальное меню слева */
 .menu {
 	position: absolute;
 	top: 218px;
@@ -396,18 +397,13 @@ button:focus-visible,
 	white-space: nowrap;
 }
 
+/* Лента слайдов: слайды в ряд, полоса прокрутки скрыта */
 .cases-track {
 	display: flex;
 	gap: 67px;
 	overflow-x: auto;
 	overscroll-behavior-x: contain;
 	scrollbar-width: none;
-	cursor: grab;
-	user-select: none;
-}
-
-.cases-track.dragging {
-	cursor: grabbing;
 }
 
 .cases-track::-webkit-scrollbar {
@@ -429,10 +425,12 @@ button:focus-visible,
 	font-weight: 800;
 }
 
+/* На телефоне слайды "примагничиваются" при свайпе */
 @media (pointer: coarse) {
 	.cases-track {
 		scroll-snap-type: x mandatory;
 	}
+
 	.slide {
 		scroll-snap-align: start;
 	}
@@ -524,7 +522,6 @@ button:focus-visible,
 }
 
 .more {
-	--uw: 23px;
 	font-size: 18px;
 }
 
@@ -582,7 +579,6 @@ button:focus-visible,
 	flex-wrap: wrap;
 	gap: 6px 14px;
 	margin-top: 19px;
-	font-size: 14px;
 	text-transform: uppercase;
 }
 
@@ -659,7 +655,7 @@ button:focus-visible,
 	background: var(--bar);
 }
 
-.list-box h4 {
+.list-box h3 {
 	font-size: 16px;
 	font-weight: 800;
 	line-height: 26px;
@@ -728,7 +724,104 @@ button:focus-visible,
 	font-weight: 700;
 }
 
-/* ---------- RESPONSIVE ---------- */
+/* ---------- ОКНА (dialog) И ФОРМА ---------- */
+.modal {
+	width: min(520px, calc(100% - 40px));
+	padding: 36px 32px 32px;
+	border: 1px solid var(--line);
+	border-radius: 10px;
+	background: var(--page);
+	color: var(--ink);
+	font-family: var(--font);
+}
+
+.modal::backdrop {
+	background: rgb(0 0 0 / 45%);
+}
+
+.modal h2 {
+	margin-bottom: 12px;
+	font-size: 24px;
+	font-weight: 800;
+}
+
+.modal p {
+	color: var(--muted);
+	font-weight: 300;
+	line-height: 1.7;
+}
+
+.modal-tags {
+	margin: 12px 0 20px;
+	font-size: 12px;
+}
+
+.modal-close {
+	position: absolute;
+	top: 10px;
+	right: 14px;
+	border: 0;
+	background: none;
+	font-size: 28px;
+	line-height: 1;
+	cursor: pointer;
+}
+
+.field {
+	display: grid;
+	gap: 6px;
+	margin-bottom: 14px;
+}
+
+.field label {
+	font-size: 12px;
+	font-weight: 600;
+	text-transform: uppercase;
+}
+
+.field input,
+.field textarea {
+	width: 100%;
+	padding: 10px 12px;
+	border: 1px solid var(--line);
+	border-radius: 6px;
+	background: var(--card);
+	color: var(--ink);
+	font: inherit;
+	font-weight: 300;
+}
+
+.field [aria-invalid='true'] {
+	border-color: #d93025;
+}
+
+.error {
+	min-height: 14px;
+	color: #d93025;
+	font-size: 11px;
+}
+
+.submit {
+	padding: 10px 28px;
+	border: 1px solid var(--ink);
+	border-radius: 99px;
+	background: var(--ink);
+	color: var(--page);
+	font-weight: 600;
+	cursor: pointer;
+}
+
+.submit:hover {
+	opacity: 0.75;
+}
+
+.modal .success {
+	margin-top: 14px;
+	color: #1a7f4b;
+	font-weight: 600;
+}
+
+/* ---------- АДАПТИВНОСТЬ ---------- */
 @media (max-width: 1000px) {
 	.p-grid {
 		grid-template-columns: 1fr;
@@ -767,8 +860,8 @@ button:focus-visible,
 	}
 
 	.brand {
-		font-size: 29px;
 		top: 24px;
+		font-size: 29px;
 	}
 
 	.call {
@@ -790,6 +883,7 @@ button:focus-visible,
 		white-space: normal;
 	}
 
+	/* Меню на телефоне: горизонтальный ряд внизу первого экрана */
 	.menu {
 		top: auto;
 		bottom: 26px;
@@ -820,7 +914,7 @@ button:focus-visible,
 
 	.cases-inner {
 		grid-template-columns: 1fr;
-		padding: 80px 0 80px;
+		padding: 80px 0;
 	}
 
 	.cases-side {
@@ -951,6 +1045,10 @@ button:focus-visible,
 
 	.brand-static {
 		font-size: 26px;
+	}
+
+	.modal {
+		padding: 32px 20px 24px;
 	}
 }
 
