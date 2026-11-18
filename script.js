@@ -199,6 +199,91 @@ const initMenu = () => {
 	links.forEach(link => observer.observe(document.querySelector(link.getAttribute('href'))))
 }
 
+ const g = document.getElementById('greeting');
+    const btn = document.getElementById('askName');
+
+    // Функция показывает приветствие
+    function showGreeting(name) {
+      g.textContent = name
+        ? `Yo, ${name}!`
+        : 'Sup!';
+    }
+
+    // Функция спрашивает имя
+    function askName() {
+      const name = prompt('What yo name?');
+      if (name) {
+        localStorage.setItem('visitorName', name);
+      } else {
+        localStorage.removeItem('visitorName');
+      }
+      showGreeting(localStorage.getItem('visitorName'));
+    }
+
+    // Когда нажимаем кнопку — спрашиваем имя
+    btn.addEventListener('click', askName);
+
+    // Если имя уже сохранено — показываем сразу
+    showGreeting(localStorage.getItem('visitorName'));
+
+
+// ===== Функция 6. Бургер-меню на телефоне =====
+const initBurger = () => {
+	const burger = document.querySelector('#hamburger')
+	const menu = document.querySelector('#menu')
+	const mobile = window.matchMedia('(max-width: 700px)')
+
+	// Открывает или закрывает меню и обновляет всё, что с этим связано
+	const setOpen = isOpen => {
+		menu.classList.toggle('open', isOpen)
+		burger.setAttribute('aria-expanded', isOpen)
+		burger.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu')
+	}
+
+	burger.addEventListener('click', () => {
+		setOpen(burger.getAttribute('aria-expanded') !== 'true')
+	})
+
+	// Клик по пункту меню закрывает панель
+	menu.addEventListener('click', event => {
+		if (event.target.closest('a')) setOpen(false)
+	})
+
+	// Клик в любом месте мимо меню и кнопки закрывает панель
+	document.addEventListener('click', event => {
+		if (!event.target.closest('#menu, #hamburger')) setOpen(false)
+	})
+
+	// Клавиша Esc закрывает панель
+	document.addEventListener('keydown', event => {
+		if (event.key === 'Escape') setOpen(false)
+	})
+
+	// Если окно растянули до компьютерной ширины (или обратно), сбрасываем состояние
+	mobile.addEventListener('change', () => setOpen(false))
+}
+
+// Кнопка «Наверх»
+const scrollTopBtn = document.getElementById('scrollTopBtn');
+
+// Порог появления (в пикселях)
+const SHOW_AFTER = 300;
+
+// Следим за прокруткой и показываем/скрываем кнопку
+window.addEventListener('scroll', () => {
+  if (window.scrollY > SHOW_AFTER) {
+    scrollTopBtn.classList.add('show');
+  } else {
+    scrollTopBtn.classList.remove('show');
+  }
+});
+
+// Плавно прокручиваем к началу страницы
+scrollTopBtn.addEventListener('click', () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+initBurger()
 initTheme()
 initProjects()
 initSlider()
