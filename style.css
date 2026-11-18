@@ -375,6 +375,74 @@ button:focus-visible,
 }
 
 /* ---------- AMAZING CASES ---------- */
+
+/* ---------- БУРГЕР-КНОПКА (на компьютере скрыта) ---------- */
+.hamburger {
+	display: none;
+	width: 42px;
+	height: 42px;
+	padding: 0;
+	place-items: center;
+	border: 1px solid var(--ink);
+	border-radius: 10px;
+	background: transparent;
+	color: inherit;
+	cursor: pointer;
+}
+
+.hamburger-bars {
+	position: relative;
+	width: 20px;
+	height: 14px;
+}
+
+.bar {
+	position: absolute;
+	left: 0;
+	right: 0;
+	height: 2px;
+	border-radius: 2px;
+	background: currentColor;
+	transition: transform 0.25s ease, top 0.25s ease, opacity 0.2s ease;
+}
+
+.bar:nth-child(1) {
+	top: 0;
+}
+
+.bar:nth-child(2) {
+	top: 6px;
+}
+
+.bar:nth-child(3) {
+	top: 12px;
+}
+
+/* Открытое меню: три полоски превращаются в крестик */
+.hamburger[aria-expanded='true'] .bar:nth-child(1) {
+	top: 6px;
+	transform: rotate(45deg);
+}
+
+.hamburger[aria-expanded='true'] .bar:nth-child(2) {
+	opacity: 0;
+}
+
+.hamburger[aria-expanded='true'] .bar:nth-child(3) {
+	top: 6px;
+	transform: rotate(-45deg);
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+		transform: translateY(-6px);
+	}
+	to {
+		opacity: 1;
+		transform: none;
+	}
+}
 .cases-inner {
 	display: grid;
 	grid-template-columns: clamp(118px, 16vw, 231px) minmax(0, 1fr);
@@ -884,31 +952,64 @@ button:focus-visible,
 	}
 
 	/* Меню на телефоне: горизонтальный ряд внизу первого экрана */
+		.hamburger {
+		position: absolute;
+		top: 22px;
+		right: 20px;
+		z-index: 6;
+		display: grid;
+	}
+
+	.call {
+		right: 76px;
+	}
+
+	/* Меню на телефоне: скрытая панель под кнопкой */
 	.menu {
-		top: auto;
-		bottom: 26px;
+		display: none;
+		top: 76px;
 		left: 20px;
 		right: 20px;
-		flex-direction: row;
-		justify-content: center;
-		gap: 18px;
+		z-index: 5;
+		flex-direction: column;
+		gap: 0;
+		padding: 8px;
+		border: 1px solid var(--line);
+		border-radius: 10px;
+		background: var(--page);
+		box-shadow: var(--shadow);
+	}
+
+	.menu.open {
+		display: flex;
+		animation: fadeIn 0.25s ease;
 	}
 
 	.menu a {
 		writing-mode: horizontal-tb;
 		transform: none;
-		font-size: 13px;
+		padding: 14px 12px;
+		border-bottom: 1px solid var(--line);
+		font-size: 16px;
+	}
+
+	.menu a:last-child {
+		border-bottom: 0;
+	}
+
+	.menu a.active {
+		font-weight: 800;
 	}
 
 	.menu a.active::after {
-		top: auto;
-		bottom: -4px;
-		width: 13px;
-		height: 1px;
+		top: 50%;
+		width: 3px;
+		height: 18px;
+		transform: translateY(-50%);
 	}
 
 	.theme-toggle {
-		bottom: 90px;
+		bottom: 40px;
 		font-size: 12px;
 	}
 
@@ -1063,4 +1164,46 @@ button:focus-visible,
 		animation: none !important;
 		transition-duration: 0.01ms !important;
 	}
+}
+#askName{
+	position: absolute;
+	top: 39px;
+	right: 670px;
+	font-size: 36px;
+	font-weight: 800;
+	background-color: inherit;
+	font-style: var(--font);
+	background: none;
+	border: 0;
+	font-size: 28px;
+	font-weight: 800;
+	line-height: 19px;
+	cursor: pointer;
+}
+
+.scroll-top {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: none;
+  background: #000000;
+  color: #fff;
+  font-size: 22px;
+  cursor: pointer;
+  box-shadow: 0 8px 22px rgba(0,0,0,.15);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  transition: opacity .25s ease, visibility .25s ease, transform .25s ease;
+}
+
+.scroll-top:hover { background: #000000; }
+
+.scroll-top.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
 }
